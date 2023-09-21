@@ -19,7 +19,7 @@ app.use(notFound)
 
 
 
-const PORT = 3000
+const PORT = 9000
 
 const start = async () => {
     try {
