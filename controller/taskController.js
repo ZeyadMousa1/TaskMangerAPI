@@ -4,8 +4,8 @@ const { createCustomError } = require('../errors/custom-error')
 
 
 const getAllTasks = asyncWrap(async (req, res) => {
-    const task = await Task.find({})
-    res.status(200).json({ result: task.length, tasks: task })
+    const tasks = await Task.find({})
+    res.status(200).json({ result: tasks.length, tasks: tasks })
 })
 
 
@@ -16,33 +16,33 @@ const createTask = asyncWrap(async (req, res) => {
 
 
 const getTask = asyncWrap(async (req, res, next) => {
-    const { id: taskID } = req.params
-    const task = await Task.findOne({ _id: taskID })
+    const { id: id } = req.params
+    const task = await Task.findOne({ _id: id })
     if (!task) {
-        return next(createCustomError(`no task with this id ${taskID}`, 404))
+        return next(createCustomError(`no task with this id ${id}`, 404))
     }
     res.status(200).json({ task })
 })
 
 
 const updateTask = asyncWrap(async (req, res) => {
-    const { id: taskID } = req.params
-    const task = await Task.findOneAndUpdate({ _id: taskID }, req.body, {
+    const { id: id } = req.params
+    const task = await Task.findOneAndUpdate({ _id: id }, req.body, {
         new: true,
         runValidators: true
     })
     if (!task) {
-        return next(createCustomError(`no task with this id ${taskID}`, 404))
+        return next(createCustomError(`no task with this id ${id}`, 404))
     }
     res.status(200).json({ task: task, status: 'success' })
 })
 
 
 const deleteTask = asyncWrap(async (req, res) => {
-    const { id: taskID } = req.params
-    const task = await Task.findOneAndDelete({ _id: taskID })
+    const { id: id } = req.params
+    const task = await Task.findOneAndDelete({ _id: id })
     if (!task) {
-        return next(createCustomError(`no task with this id ${taskID}`, 404))
+        return next(createCustomError(`no task with this id ${id}`, 404))
     }
     res.status(200).json({ tasks: null, status: 'success' })
 })

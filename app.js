@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const taskRouter = require('./routes/taskRoute')
 const morgan = require('morgan')
+const cors = require('cors')
 
 const connectDB = require('./db/connect')
 require('dotenv').config()
@@ -10,6 +11,7 @@ const notFound = require('./middelware/not-found')
 const errorHandlerMiddelware = require('./middelware/error-handler')
 
 // Middelwares
+app.use(cors());
 app.use(morgan('tiny'))
 app.use(express.json())
 
